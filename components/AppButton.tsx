@@ -1,13 +1,12 @@
-import { ActivityIndicator, StyleProp, StyleSheet, Text, TextStyle, TouchableOpacity, ViewStyle } from 'react-native';
+import { StyleProp, StyleSheet, Text, TextStyle, TouchableOpacity, ViewStyle } from 'react-native';
 
 import { theme } from '@/constants/theme';
 
 type AppButtonProps = {
   title: string;
   onPress: () => void;
-  loading?: boolean;
   disabled?: boolean;
-  variant?: 'primary' | 'secondary';
+  variant?: 'primary' | 'ghost';
   style?: StyleProp<ViewStyle>;
   textStyle?: StyleProp<TextStyle>;
 };
@@ -15,31 +14,25 @@ type AppButtonProps = {
 export function AppButton({
   title,
   onPress,
-  loading = false,
   disabled = false,
   variant = 'primary',
   style,
   textStyle,
 }: AppButtonProps) {
-  const isDisabled = disabled || loading;
-  const isSecondary = variant === 'secondary';
+  const isGhost = variant === 'ghost';
 
   return (
     <TouchableOpacity
-      activeOpacity={0.86}
-      disabled={isDisabled}
+      activeOpacity={0.84}
+      disabled={disabled}
       onPress={onPress}
       style={[
         styles.button,
-        isSecondary ? styles.secondaryButton : styles.primaryButton,
-        isDisabled && styles.disabledButton,
+        isGhost ? styles.ghostButton : styles.primaryButton,
+        disabled && styles.disabledButton,
         style,
       ]}>
-      {loading ? (
-        <ActivityIndicator color={isSecondary ? theme.colors.primary : theme.colors.white} />
-      ) : (
-        <Text style={[styles.title, isSecondary && styles.secondaryTitle, textStyle]}>{title}</Text>
-      )}
+      <Text style={[styles.title, isGhost && styles.ghostTitle, textStyle]}>{title}</Text>
     </TouchableOpacity>
   );
 }
@@ -47,9 +40,8 @@ export function AppButton({
 const styles = StyleSheet.create({
   button: {
     alignItems: 'center',
-    borderRadius: theme.radius.lg,
-    flexDirection: 'row',
-    height: 56,
+    borderRadius: theme.radius.md,
+    height: 54,
     justifyContent: 'center',
     paddingHorizontal: theme.spacing.lg,
   },
@@ -57,20 +49,20 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.primary,
     ...theme.shadows.button,
   },
-  secondaryButton: {
-    backgroundColor: theme.colors.white,
+  ghostButton: {
+    backgroundColor: theme.colors.chip,
     borderColor: theme.colors.border,
     borderWidth: 1,
   },
   disabledButton: {
-    opacity: 0.68,
+    opacity: 0.6,
   },
   title: {
-    color: theme.colors.white,
+    color: theme.colors.background,
     fontSize: theme.fontSize.md,
-    fontWeight: '800',
+    fontWeight: '900',
   },
-  secondaryTitle: {
+  ghostTitle: {
     color: theme.colors.primary,
   },
 });

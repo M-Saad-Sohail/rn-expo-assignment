@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
   label: {
     color: theme.colors.text,
     fontSize: theme.fontSize.sm,
-    fontWeight: '700',
+    fontWeight: '800',
   },
   input: {
     backgroundColor: theme.colors.inputBackground,
@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     color: theme.colors.text,
     fontSize: theme.fontSize.md,
-    height: 54,
+    height: 56,
     paddingHorizontal: theme.spacing.md,
   },
   inputError: {
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
   error: {
     color: theme.colors.danger,
     fontSize: theme.fontSize.xs,
-    fontWeight: '600',
+    fontWeight: '700',
   },
 });
 

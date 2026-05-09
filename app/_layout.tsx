@@ -14,7 +14,7 @@ export default function RootLayout() {
         <Stack.Screen name="signup" />
         <Stack.Screen name="home" />
       </Stack>
-      <StatusBar style="dark" />
+      <StatusBar style="light" />
     </>
   );
 }
