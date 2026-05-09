@@ -1,41 +1,117 @@
-/**
- * Below are the colors that are used in the app. The colors are defined in the light and dark mode.
- * There are many other ways to style your app. For example, [Nativewind](https://www.nativewind.dev/), [Tamagui](https://tamagui.dev/), [unistyles](https://reactnativeunistyles.vercel.app), etc.
- */
-
 import { Platform } from 'react-native';
 
-const tintColorLight = '#0a7ea4';
-const tintColorDark = '#fff';
+export const theme = {
+  colors: {
+    primary: '#2563EB',
+    primaryDark: '#1D4ED8',
+    primarySoft: '#DBEAFE',
+    background: '#F8FBFF',
+    backgroundSoft: '#EAF3FF',
+    card: '#FFFFFF',
+    text: '#0F172A',
+    mutedText: '#64748B',
+    border: '#D9E7FF',
+    success: '#16A34A',
+    successSoft: '#DCFCE7',
+    danger: '#DC2626',
+    dangerSoft: '#FEE2E2',
+    inputBackground: '#F8FAFC',
+    white: '#FFFFFF',
+    sky: '#E0F2FE',
+    blueMist: '#EFF6FF',
+    iconBackground: '#EEF4FF',
+    code: '#172554',
+    warning: '#F59E0B',
+  },
+  spacing: {
+    xs: 6,
+    sm: 10,
+    md: 16,
+    lg: 24,
+    xl: 32,
+    xxl: 44,
+  },
+  radius: {
+    sm: 10,
+    md: 14,
+    lg: 20,
+    xl: 28,
+    pill: 999,
+  },
+  fontSize: {
+    xs: 12,
+    sm: 14,
+    md: 16,
+    lg: 20,
+    xl: 28,
+    xxl: 36,
+  },
+  shadows: {
+    card:
+      Platform.select({
+        ios: {
+          shadowColor: '#1E3A8A',
+          shadowOffset: { width: 0, height: 12 },
+          shadowOpacity: 0.12,
+          shadowRadius: 20,
+        },
+        android: {
+          elevation: 5,
+        },
+        default: {
+          shadowColor: '#1E3A8A',
+          shadowOffset: { width: 0, height: 8 },
+          shadowOpacity: 0.1,
+          shadowRadius: 16,
+        },
+      }) ?? {},
+    button:
+      Platform.select({
+        ios: {
+          shadowColor: '#2563EB',
+          shadowOffset: { width: 0, height: 8 },
+          shadowOpacity: 0.2,
+          shadowRadius: 12,
+        },
+        android: {
+          elevation: 3,
+        },
+        default: {
+          shadowColor: '#2563EB',
+          shadowOffset: { width: 0, height: 6 },
+          shadowOpacity: 0.18,
+          shadowRadius: 10,
+        },
+      }) ?? {},
+  },
+};
+
+export type AppTheme = typeof theme;
 
 export const Colors = {
   light: {
-    text: '#11181C',
-    background: '#fff',
-    tint: tintColorLight,
-    icon: '#687076',
-    tabIconDefault: '#687076',
-    tabIconSelected: tintColorLight,
+    text: theme.colors.text,
+    background: theme.colors.background,
+    tint: theme.colors.primary,
+    icon: theme.colors.mutedText,
+    tabIconDefault: theme.colors.mutedText,
+    tabIconSelected: theme.colors.primary,
   },
   dark: {
-    text: '#ECEDEE',
-    background: '#151718',
-    tint: tintColorDark,
-    icon: '#9BA1A6',
-    tabIconDefault: '#9BA1A6',
-    tabIconSelected: tintColorDark,
+    text: theme.colors.white,
+    background: theme.colors.code,
+    tint: theme.colors.white,
+    icon: theme.colors.backgroundSoft,
+    tabIconDefault: theme.colors.backgroundSoft,
+    tabIconSelected: theme.colors.white,
   },
 };
 
 export const Fonts = Platform.select({
   ios: {
-    /** iOS `UIFontDescriptorSystemDesignDefault` */
     sans: 'system-ui',
-    /** iOS `UIFontDescriptorSystemDesignSerif` */
     serif: 'ui-serif',
-    /** iOS `UIFontDescriptorSystemDesignRounded` */
     rounded: 'ui-rounded',
-    /** iOS `UIFontDescriptorSystemDesignMonospaced` */
     mono: 'ui-monospace',
   },
   default: {
