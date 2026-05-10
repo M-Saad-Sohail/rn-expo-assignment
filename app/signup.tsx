@@ -1,6 +1,6 @@
-import { Ionicons } from "@expo/vector-icons";
-import { router } from "expo-router";
-import { useState } from "react";
+import { Ionicons } from '@expo/vector-icons';
+import { router } from 'expo-router';
+import { useState } from 'react';
 import {
   KeyboardAvoidingView,
   Platform,
@@ -9,12 +9,12 @@ import {
   Text,
   TouchableOpacity,
   View,
-} from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+} from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { AppButton } from "@/components/AppButton";
-import { AppInput } from "@/components/AppInput";
-import { theme } from "@/constants/theme";
+import { AppButton } from '@/components/AppButton';
+import { AppInput } from '@/components/AppInput';
+import { theme } from '@/constants/theme';
 
 type SignupErrors = {
   fullName?: string;
@@ -23,9 +23,9 @@ type SignupErrors = {
 };
 
 export default function SignupScreen() {
-  const [fullName, setFullName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [fullName, setFullName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [errors, setErrors] = useState<SignupErrors>({});
   const [loading, setLoading] = useState(false);
 
@@ -33,15 +33,15 @@ export default function SignupScreen() {
     const nextErrors: SignupErrors = {};
 
     if (!fullName.trim()) {
-      nextErrors.fullName = "Full name is required.";
+      nextErrors.fullName = 'Full name is required.';
     }
 
     if (!email.trim()) {
-      nextErrors.email = "Email is required.";
+      nextErrors.email = 'Email is required.';
     }
 
     if (!password.trim()) {
-      nextErrors.password = "Password is required.";
+      nextErrors.password = 'Password is required.';
     }
 
     setErrors(nextErrors);
@@ -55,7 +55,7 @@ export default function SignupScreen() {
     setTimeout(() => {
       setLoading(false);
       router.replace({
-        pathname: "/",
+        pathname: '/',
         params: {
           email: email.trim(),
           password,
@@ -68,41 +68,29 @@ export default function SignupScreen() {
   return (
     <SafeAreaView style={styles.safeArea}>
       <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : undefined}
-        style={styles.keyboardView}
-      >
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        style={styles.keyboardView}>
         <ScrollView
           contentContainerStyle={styles.content}
           keyboardShouldPersistTaps="handled"
-          showsVerticalScrollIndicator={false}
-        >
-          <View style={styles.topBar}>
-            <TouchableOpacity
-              activeOpacity={0.78}
-              onPress={() => router.replace("/")}
-              style={styles.backButton}
-            >
-              <Ionicons
-                color={theme.colors.primary}
-                name="chevron-back"
-                size={20}
-              />
+          showsVerticalScrollIndicator={false}>
+          <View style={styles.headerRow}>
+            <TouchableOpacity activeOpacity={0.78} onPress={() => router.replace('/')} style={styles.backButton}>
+              <Ionicons color={theme.colors.text} name="arrow-back" size={20} />
             </TouchableOpacity>
-            <Text style={styles.topBarTitle}>New profile</Text>
+            <View>
+              <Text style={styles.headerSmall}>New workspace</Text>
+              <Text style={styles.headerTitle}>Signup</Text>
+            </View>
           </View>
 
-          <View style={styles.heroCard}>
-            <View style={styles.heroIcon}>
-              <Ionicons
-                color={theme.colors.primary}
-                name="sparkles"
-                size={28}
-              />
+          <View style={styles.previewCard}>
+            <View style={styles.previewBadge}>
+              <Ionicons color={theme.colors.ink} name="color-palette" size={24} />
             </View>
-            <Text style={styles.heroTitle}>Start a fresh dev session</Text>
-            <Text style={styles.heroSubtitle}>
-              Create a lightweight profile and jump back to login with your
-              details ready.
+            <Text style={styles.previewTitle}>Create your build profile</Text>
+            <Text style={styles.previewText}>
+              Add your details once, then return to login with everything prefilled.
             </Text>
           </View>
 
@@ -116,7 +104,7 @@ export default function SignupScreen() {
                   setFullName(value);
                   setErrors((current) => ({ ...current, fullName: undefined }));
                 }}
-                placeholder="Shahrukh Shah"
+                placeholder="Aleena Fatima"
                 value={fullName}
               />
               <AppInput
@@ -127,7 +115,7 @@ export default function SignupScreen() {
                   setEmail(value);
                   setErrors((current) => ({ ...current, email: undefined }));
                 }}
-                placeholder="shahrukh@example.com"
+                placeholder="aleena@example.com"
                 value={email}
               />
               <AppInput
@@ -146,15 +134,11 @@ export default function SignupScreen() {
             <AppButton
               disabled={loading}
               onPress={handleSignup}
-              title={loading ? "Creating account..." : "Signup"}
+              title={loading ? 'Creating account...' : 'Signup'}
             />
 
-            <TouchableOpacity
-              activeOpacity={0.75}
-              onPress={() => router.replace("/")}
-              style={styles.loginLink}
-            >
-              <Text style={styles.loginText}>Already have access? Login</Text>
+            <TouchableOpacity activeOpacity={0.75} onPress={() => router.replace('/')} style={styles.loginLink}>
+              <Text style={styles.loginText}>Back to login</Text>
             </TouchableOpacity>
           </View>
         </ScrollView>
@@ -177,55 +161,59 @@ const styles = StyleSheet.create({
     padding: theme.spacing.lg,
     paddingBottom: theme.spacing.xxl,
   },
-  topBar: {
-    alignItems: "center",
-    flexDirection: "row",
+  headerRow: {
+    alignItems: 'center',
+    flexDirection: 'row',
     gap: theme.spacing.md,
     paddingTop: theme.spacing.sm,
   },
   backButton: {
-    alignItems: "center",
+    alignItems: 'center',
     backgroundColor: theme.colors.chip,
     borderColor: theme.colors.border,
-    borderRadius: theme.radius.md,
+    borderRadius: theme.radius.pill,
     borderWidth: 1,
-    height: 44,
-    justifyContent: "center",
-    width: 44,
+    height: 46,
+    justifyContent: 'center',
+    width: 46,
   },
-  topBarTitle: {
+  headerSmall: {
+    color: theme.colors.accent,
+    fontSize: theme.fontSize.xs,
+    fontWeight: '900',
+    textTransform: 'uppercase',
+  },
+  headerTitle: {
     color: theme.colors.text,
-    fontSize: theme.fontSize.lg,
-    fontWeight: "900",
+    fontSize: theme.fontSize.xl,
+    fontWeight: '900',
     letterSpacing: 0,
   },
-  heroCard: {
-    backgroundColor: theme.colors.cardAlt,
+  previewCard: {
+    backgroundColor: theme.colors.primarySoft,
     borderColor: theme.colors.border,
     borderRadius: theme.radius.xl,
     borderWidth: 1,
     padding: theme.spacing.lg,
     ...theme.shadows.card,
   },
-  heroIcon: {
-    alignItems: "center",
-    backgroundColor: theme.colors.accentSoft,
-    borderColor: theme.colors.accent,
+  previewBadge: {
+    alignItems: 'center',
+    backgroundColor: theme.colors.gold,
     borderRadius: theme.radius.lg,
-    borderWidth: 1,
-    height: 58,
-    justifyContent: "center",
+    height: 56,
+    justifyContent: 'center',
     marginBottom: theme.spacing.lg,
-    width: 58,
+    width: 56,
   },
-  heroTitle: {
+  previewTitle: {
     color: theme.colors.text,
     fontSize: theme.fontSize.xl,
-    fontWeight: "900",
+    fontWeight: '900',
     letterSpacing: 0,
     lineHeight: 34,
   },
-  heroSubtitle: {
+  previewText: {
     color: theme.colors.mutedText,
     fontSize: theme.fontSize.md,
     lineHeight: 24,
@@ -243,12 +231,12 @@ const styles = StyleSheet.create({
     gap: theme.spacing.md,
   },
   loginLink: {
-    alignItems: "center",
+    alignItems: 'center',
     paddingVertical: theme.spacing.xs,
   },
   loginText: {
     color: theme.colors.primary,
     fontSize: theme.fontSize.sm,
-    fontWeight: "900",
+    fontWeight: '900',
   },
 });

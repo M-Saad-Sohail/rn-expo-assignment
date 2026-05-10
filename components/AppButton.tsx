@@ -6,7 +6,7 @@ type AppButtonProps = {
   title: string;
   onPress: () => void;
   disabled?: boolean;
-  variant?: 'primary' | 'ghost';
+  variant?: 'primary' | 'soft';
   style?: StyleProp<ViewStyle>;
   textStyle?: StyleProp<TextStyle>;
 };
@@ -19,7 +19,7 @@ export function AppButton({
   style,
   textStyle,
 }: AppButtonProps) {
-  const isGhost = variant === 'ghost';
+  const isSoft = variant === 'soft';
 
   return (
     <TouchableOpacity
@@ -28,11 +28,11 @@ export function AppButton({
       onPress={onPress}
       style={[
         styles.button,
-        isGhost ? styles.ghostButton : styles.primaryButton,
+        isSoft ? styles.softButton : styles.primaryButton,
         disabled && styles.disabledButton,
         style,
       ]}>
-      <Text style={[styles.title, isGhost && styles.ghostTitle, textStyle]}>{title}</Text>
+      <Text style={[styles.title, isSoft && styles.softTitle, textStyle]}>{title}</Text>
     </TouchableOpacity>
   );
 }
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.primary,
     ...theme.shadows.button,
   },
-  ghostButton: {
+  softButton: {
     backgroundColor: theme.colors.chip,
     borderColor: theme.colors.border,
     borderWidth: 1,
@@ -58,12 +58,12 @@ const styles = StyleSheet.create({
     opacity: 0.6,
   },
   title: {
-    color: theme.colors.background,
+    color: theme.colors.ink,
     fontSize: theme.fontSize.md,
     fontWeight: '900',
   },
-  ghostTitle: {
-    color: theme.colors.primary,
+  softTitle: {
+    color: theme.colors.text,
   },
 });
 
