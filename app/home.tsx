@@ -7,99 +7,101 @@ import { theme } from '@/constants/theme';
 
 type IoniconName = keyof typeof Ionicons.glyphMap;
 
-type StatusCard = {
+type DevCard = {
   icon: IoniconName;
-  title: string;
-  text: string;
+  label: string;
+  value: string;
 };
 
-const statusCards: StatusCard[] = [
+const devCards: DevCard[] = [
   {
-    icon: 'cafe',
-    title: 'Developer Status',
-    text: 'Code, coffee, and controlled chaos.',
+    icon: 'code-working',
+    label: 'Developer Status',
+    value: 'Building cool things, one component at a time.',
   },
   {
-    icon: 'sparkles',
-    title: "Today's Coding Energy",
-    text: 'Building cool things, one component at a time.',
+    icon: 'flash',
+    label: "Today's Coding Energy",
+    value: 'Code, coffee, and controlled chaos.',
   },
   {
     icon: 'bug',
-    title: 'Debugging Mood',
-    text: "Today's mission: fix bugs without creating new ones.",
+    label: 'Debugging Mood',
+    value: "Today's mission: fix bugs without creating new ones.",
   },
   {
-    icon: 'chatbox',
-    title: 'Funny Coding Quote',
-    text: 'Console.log is still a valid emotional support tool.',
+    icon: 'chatbubble-ellipses',
+    label: 'Funny Coding Quote',
+    value: 'Console.log is still a valid emotional support tool.',
   },
 ];
 
-const goals = ['Polish one screen', 'Rename one confusing variable', 'Take a tiny break after the next commit'];
+const quickGoals = ['Keep components small', 'Fix one bug cleanly', 'Record one clear walkthrough'];
 
 export default function HomeScreen() {
   const params = useLocalSearchParams<{ name?: string }>();
-  const displayName = params.name?.trim() || 'Aleena Fatima';
+  const displayName = params.name?.trim() || 'Shakaib Lodhi';
 
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
-        <View style={styles.hero}>
-          <View style={styles.heroTop}>
-            <View style={styles.avatar}>
-              <Text style={styles.avatarText}>AF</Text>
+        <View style={styles.header}>
+          <View style={styles.headerTop}>
+            <View style={styles.namePlate}>
+              <Text style={styles.namePlateText}>SL</Text>
             </View>
             <TouchableOpacity activeOpacity={0.78} onPress={() => router.replace('/')} style={styles.logoutButton}>
-              <Ionicons color={theme.colors.text} name="log-out-outline" size={18} />
               <Text style={styles.logoutText}>Logout</Text>
+              <Ionicons color={theme.colors.primary} name="exit-outline" size={18} />
             </TouchableOpacity>
           </View>
 
           <Text style={styles.greeting}>Heyy {displayName} 👋</Text>
-          <Text style={styles.heroText}>
-            Your dev corner is ready. Keep it simple, keep it clean, and ship something lovely.
+          <Text style={styles.headerText}>
+            Your workspace is online. Keep the logic simple and the interface sharp.
           </Text>
         </View>
 
-        <View style={styles.energyCard}>
-          <View style={styles.energyIcon}>
-            <Ionicons color={theme.colors.ink} name="flash" size={24} />
+        <View style={styles.missionCard}>
+          <View style={styles.missionIcon}>
+            <Ionicons color={theme.colors.ink} name="rocket" size={25} />
           </View>
-          <View style={styles.energyCopy}>
-            <Text style={styles.energyLabel}>{"Today's Coding Energy"}</Text>
-            <Text style={styles.energyTitle}>Soft focus, sharp commits</Text>
+          <View style={styles.missionTextBlock}>
+            <Text style={styles.missionLabel}>{"Today's Mission"}</Text>
+            <Text style={styles.missionTitle}>Fix bugs without creating new ones.</Text>
           </View>
         </View>
 
-        <View style={styles.cardGrid}>
-          {statusCards.map((card) => (
-            <View key={card.title} style={styles.statusCard}>
-              <View style={styles.cardIcon}>
-                <Ionicons color={theme.colors.primary} name={card.icon} size={21} />
+        <View style={styles.cardsWrap}>
+          {devCards.map((card) => (
+            <View key={card.label} style={styles.devCard}>
+              <View style={styles.devCardTop}>
+                <View style={styles.devIcon}>
+                  <Ionicons color={theme.colors.accent} name={card.icon} size={21} />
+                </View>
+                <Text style={styles.devLabel}>{card.label}</Text>
               </View>
-              <Text style={styles.cardTitle}>{card.title}</Text>
-              <Text style={styles.cardText}>{card.text}</Text>
+              <Text style={styles.devValue}>{card.value}</Text>
             </View>
           ))}
-        </View>
-
-        <View style={styles.quoteCard}>
-          <Text style={styles.quoteLabel}>Funny Coding Quote</Text>
-          <Text style={styles.quoteText}>Console.log is still a valid emotional support tool.</Text>
         </View>
 
         <View style={styles.goalsCard}>
           <View style={styles.sectionHeader}>
             <Text style={styles.sectionTitle}>Quick Goals</Text>
-            <Ionicons color={theme.colors.accent} name="checkmark-done-circle" size={23} />
+            <Text style={styles.goalCount}>3 tasks</Text>
           </View>
-          {goals.map((goal) => (
+          {quickGoals.map((goal, index) => (
             <View key={goal} style={styles.goalRow}>
-              <View style={styles.goalDot} />
+              <Text style={styles.goalIndex}>0{index + 1}</Text>
               <Text style={styles.goalText}>{goal}</Text>
             </View>
           ))}
+        </View>
+
+        <View style={styles.quoteCard}>
+          <Ionicons color={theme.colors.primary} name="terminal" size={22} />
+          <Text style={styles.quoteText}>Console.log is still a valid emotional support tool.</Text>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -116,7 +118,7 @@ const styles = StyleSheet.create({
     padding: theme.spacing.lg,
     paddingBottom: theme.spacing.xxl,
   },
-  hero: {
+  header: {
     backgroundColor: theme.colors.cardAlt,
     borderColor: theme.colors.border,
     borderRadius: theme.radius.xl,
@@ -124,21 +126,21 @@ const styles = StyleSheet.create({
     padding: theme.spacing.lg,
     ...theme.shadows.card,
   },
-  heroTop: {
+  headerTop: {
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: theme.spacing.xl,
   },
-  avatar: {
+  namePlate: {
     alignItems: 'center',
     backgroundColor: theme.colors.primary,
-    borderRadius: theme.radius.pill,
-    height: 58,
+    borderRadius: theme.radius.sm,
+    height: 56,
     justifyContent: 'center',
-    width: 58,
+    width: 56,
   },
-  avatarText: {
+  namePlateText: {
     color: theme.colors.ink,
     fontSize: theme.fontSize.md,
     fontWeight: '900',
@@ -166,98 +168,87 @@ const styles = StyleSheet.create({
     letterSpacing: 0,
     lineHeight: 36,
   },
-  heroText: {
+  headerText: {
     color: theme.colors.mutedText,
     fontSize: theme.fontSize.md,
     lineHeight: 24,
     marginTop: theme.spacing.sm,
   },
-  energyCard: {
+  missionCard: {
     alignItems: 'center',
-    backgroundColor: theme.colors.accentSoft,
-    borderColor: theme.colors.accentDark,
-    borderRadius: theme.radius.xl,
+    backgroundColor: theme.colors.primarySoft,
+    borderColor: theme.colors.primaryDark,
+    borderRadius: theme.radius.lg,
     borderWidth: 1,
     flexDirection: 'row',
     gap: theme.spacing.md,
     padding: theme.spacing.lg,
   },
-  energyIcon: {
+  missionIcon: {
     alignItems: 'center',
-    backgroundColor: theme.colors.accent,
-    borderRadius: theme.radius.lg,
+    backgroundColor: theme.colors.primary,
+    borderRadius: theme.radius.sm,
     height: 52,
     justifyContent: 'center',
     width: 52,
   },
-  energyCopy: {
+  missionTextBlock: {
     flex: 1,
   },
-  energyLabel: {
-    color: theme.colors.accent,
+  missionLabel: {
+    color: theme.colors.primary,
     fontSize: theme.fontSize.xs,
     fontWeight: '900',
     textTransform: 'uppercase',
   },
-  energyTitle: {
+  missionTitle: {
     color: theme.colors.text,
     fontSize: theme.fontSize.md,
     fontWeight: '900',
+    lineHeight: 22,
     marginTop: theme.spacing.xs,
   },
-  cardGrid: {
+  cardsWrap: {
     gap: theme.spacing.md,
   },
-  statusCard: {
+  devCard: {
     backgroundColor: theme.colors.card,
     borderColor: theme.colors.border,
     borderRadius: theme.radius.lg,
     borderWidth: 1,
-    gap: theme.spacing.sm,
+    gap: theme.spacing.md,
     padding: theme.spacing.lg,
   },
-  cardIcon: {
+  devCardTop: {
     alignItems: 'center',
-    backgroundColor: theme.colors.chip,
-    borderRadius: theme.radius.md,
-    height: 42,
+    flexDirection: 'row',
+    gap: theme.spacing.sm,
+  },
+  devIcon: {
+    alignItems: 'center',
+    backgroundColor: theme.colors.accentSoft,
+    borderRadius: theme.radius.sm,
+    height: 38,
     justifyContent: 'center',
-    width: 42,
+    width: 38,
   },
-  cardTitle: {
-    color: theme.colors.text,
-    fontSize: theme.fontSize.md,
-    fontWeight: '900',
-  },
-  cardText: {
-    color: theme.colors.mutedText,
-    fontSize: theme.fontSize.sm,
-    lineHeight: 22,
-  },
-  quoteCard: {
-    backgroundColor: theme.colors.primarySoft,
-    borderColor: theme.colors.primaryDark,
-    borderRadius: theme.radius.xl,
-    borderWidth: 1,
-    padding: theme.spacing.lg,
-  },
-  quoteLabel: {
-    color: theme.colors.primary,
+  devLabel: {
+    color: theme.colors.accent,
+    flex: 1,
     fontSize: theme.fontSize.xs,
     fontWeight: '900',
-    marginBottom: theme.spacing.sm,
     textTransform: 'uppercase',
   },
-  quoteText: {
+  devValue: {
     color: theme.colors.text,
-    fontSize: theme.fontSize.lg,
-    fontWeight: '900',
-    lineHeight: 28,
+    fontSize: theme.fontSize.md,
+    fontWeight: '800',
+    lineHeight: 23,
   },
   goalsCard: {
     backgroundColor: theme.colors.cardAlt,
     borderColor: theme.colors.border,
-    borderRadius: theme.radius.xl,
+    borderRadius: theme.radius.lg,
     borderWidth: 1,
     gap: theme.spacing.md,
     padding: theme.spacing.lg,
@@ -273,22 +264,47 @@ const styles = StyleSheet.create({
     fontWeight: '900',
     letterSpacing: 0,
   },
+  goalCount: {
+    color: theme.colors.primary,
+    fontSize: theme.fontSize.xs,
+    fontWeight: '900',
+    textTransform: 'uppercase',
+  },
   goalRow: {
     alignItems: 'center',
+    backgroundColor: theme.colors.graphite,
+    borderColor: theme.colors.border,
+    borderRadius: theme.radius.sm,
+    borderWidth: 1,
     flexDirection: 'row',
     gap: theme.spacing.md,
+    padding: theme.spacing.md,
   },
-  goalDot: {
-    backgroundColor: theme.colors.gold,
-    borderRadius: theme.radius.pill,
-    height: 10,
-    width: 10,
+  goalIndex: {
+    color: theme.colors.primary,
+    fontSize: theme.fontSize.sm,
+    fontWeight: '900',
   },
   goalText: {
     color: theme.colors.text,
     flex: 1,
     fontSize: theme.fontSize.sm,
     fontWeight: '700',
-    lineHeight: 22,
+    lineHeight: 21,
+  },
+  quoteCard: {
+    alignItems: 'flex-start',
+    backgroundColor: theme.colors.accentSoft,
+    borderColor: theme.colors.accentDark,
+    borderRadius: theme.radius.lg,
+    borderWidth: 1,
+    gap: theme.spacing.md,
+    padding: theme.spacing.lg,
+  },
+  quoteText: {
+    color: theme.colors.text,
+    fontSize: theme.fontSize.lg,
+    fontWeight: '900',
+    lineHeight: 28,
   },
 });

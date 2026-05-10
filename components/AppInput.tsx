@@ -54,11 +54,11 @@ const styles = StyleSheet.create({
   input: {
     backgroundColor: theme.colors.inputBackground,
     borderColor: theme.colors.border,
-    borderRadius: theme.radius.md,
+    borderRadius: theme.radius.sm,
     borderWidth: 1,
     color: theme.colors.text,
     fontSize: theme.fontSize.md,
-    height: 56,
+    height: 54,
     paddingHorizontal: theme.spacing.md,
   },
   inputError: {

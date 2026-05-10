@@ -30,7 +30,7 @@ export default function LoginScreen() {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [fullName, setFullName] = useState('Aleena Fatima');
+  const [fullName, setFullName] = useState('Shakaib Lodhi');
   const [errors, setErrors] = useState<LoginErrors>({});
   const [loading, setLoading] = useState(false);
 
@@ -71,7 +71,7 @@ export default function LoginScreen() {
       setLoading(false);
       router.replace({
         pathname: '/home',
-        params: { name: fullName.trim() || 'Aleena Fatima' },
+        params: { name: fullName.trim() || 'Shakaib Lodhi' },
       });
     }, 1500);
   };
@@ -85,26 +85,29 @@ export default function LoginScreen() {
           contentContainerStyle={styles.content}
           keyboardShouldPersistTaps="handled"
           showsVerticalScrollIndicator={false}>
-          <View style={styles.glowTop} />
-          <View style={styles.glowBottom} />
-
-          <View style={styles.heroCard}>
-            <View style={styles.heroTop}>
-              <View style={styles.logoBubble}>
-                <Ionicons color={theme.colors.ink} name="layers" size={28} />
+          <View style={styles.topPanel}>
+            <View style={styles.logoRow}>
+              <View style={styles.logoBox}>
+                <Ionicons color={theme.colors.ink} name="construct" size={27} />
               </View>
-              <Text style={styles.brand}>PixelStack</Text>
+              <View>
+                <Text style={styles.brandSmall}>Build Room</Text>
+                <Text style={styles.brandTitle}>DevForge</Text>
+              </View>
             </View>
-            <Text style={styles.heroTitle}>Design. Code. Repeat.</Text>
+
+            <Text style={styles.heroTitle}>Make the next screen count.</Text>
             <Text style={styles.heroText}>
-              {"Log in to your cozy build space and keep today's ideas moving."}
+              Login to continue your coding flow with simple state and clean navigation.
             </Text>
           </View>
 
           <View style={styles.formCard}>
-            <View style={styles.formHeader}>
-              <Text style={styles.formLabel}>Welcome back</Text>
+            <View style={styles.formTitleRow}>
               <Text style={styles.formTitle}>Login</Text>
+              <View style={styles.statusPill}>
+                <Text style={styles.statusText}>Ready</Text>
+              </View>
             </View>
 
             <View style={styles.form}>
@@ -116,7 +119,7 @@ export default function LoginScreen() {
                   setEmail(value);
                   setErrors((current) => ({ ...current, email: undefined }));
                 }}
-                placeholder="aleena@example.com"
+                placeholder="shakaib@example.com"
                 value={email}
               />
               <AppInput
@@ -139,9 +142,9 @@ export default function LoginScreen() {
             />
 
             <View style={styles.switchRow}>
-              <Text style={styles.switchText}>No profile yet?</Text>
+              <Text style={styles.switchText}>First time here?</Text>
               <TouchableOpacity activeOpacity={0.75} onPress={() => router.push('/signup')}>
-                <Text style={styles.switchLink}>Create one</Text>
+                <Text style={styles.switchLink}>Create account</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -161,54 +164,40 @@ const styles = StyleSheet.create({
   },
   content: {
     flexGrow: 1,
+    gap: theme.spacing.lg,
     justifyContent: 'center',
     padding: theme.spacing.lg,
     paddingBottom: theme.spacing.xxl,
   },
-  glowTop: {
-    backgroundColor: theme.colors.primarySoft,
-    borderRadius: 150,
-    height: 260,
-    left: -120,
-    opacity: 0.72,
-    position: 'absolute',
-    top: -60,
-    width: 260,
-  },
-  glowBottom: {
-    backgroundColor: theme.colors.accentSoft,
-    borderRadius: 130,
-    bottom: 60,
-    height: 220,
-    opacity: 0.72,
-    position: 'absolute',
-    right: -118,
-    width: 220,
-  },
-  heroCard: {
+  topPanel: {
     backgroundColor: theme.colors.cardAlt,
     borderColor: theme.colors.border,
     borderRadius: theme.radius.xl,
     borderWidth: 1,
-    marginBottom: theme.spacing.lg,
     padding: theme.spacing.lg,
     ...theme.shadows.card,
   },
-  heroTop: {
+  logoRow: {
     alignItems: 'center',
     flexDirection: 'row',
-    gap: theme.spacing.sm,
+    gap: theme.spacing.md,
     marginBottom: theme.spacing.xl,
   },
-  logoBubble: {
+  logoBox: {
     alignItems: 'center',
-    backgroundColor: theme.colors.accent,
-    borderRadius: theme.radius.pill,
+    backgroundColor: theme.colors.primary,
+    borderRadius: theme.radius.sm,
     height: 54,
     justifyContent: 'center',
     width: 54,
   },
-  brand: {
+  brandSmall: {
+    color: theme.colors.accent,
+    fontSize: theme.fontSize.xs,
+    fontWeight: '900',
+    textTransform: 'uppercase',
+  },
+  brandTitle: {
     color: theme.colors.text,
     fontSize: theme.fontSize.lg,
     fontWeight: '900',
@@ -219,7 +208,7 @@ const styles = StyleSheet.create({
     fontSize: theme.fontSize.xxl,
     fontWeight: '900',
     letterSpacing: 0,
-    lineHeight: 46,
+    lineHeight: 44,
   },
   heroText: {
     color: theme.colors.mutedText,
@@ -230,19 +219,15 @@ const styles = StyleSheet.create({
   formCard: {
     backgroundColor: theme.colors.card,
     borderColor: theme.colors.border,
-    borderRadius: theme.radius.xl,
+    borderRadius: theme.radius.lg,
     borderWidth: 1,
     gap: theme.spacing.lg,
     padding: theme.spacing.lg,
   },
-  formHeader: {
-    gap: theme.spacing.xs,
-  },
-  formLabel: {
-    color: theme.colors.accent,
-    fontSize: theme.fontSize.xs,
-    fontWeight: '900',
-    textTransform: 'uppercase',
+  formTitleRow: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   formTitle: {
     color: theme.colors.text,
@@ -250,12 +235,26 @@ const styles = StyleSheet.create({
     fontWeight: '900',
     letterSpacing: 0,
   },
+  statusPill: {
+    backgroundColor: theme.colors.accentSoft,
+    borderColor: theme.colors.accentDark,
+    borderRadius: theme.radius.pill,
+    borderWidth: 1,
+    paddingHorizontal: theme.spacing.md,
+    paddingVertical: theme.spacing.xs,
+  },
+  statusText: {
+    color: theme.colors.accent,
+    fontSize: theme.fontSize.xs,
+    fontWeight: '900',
+  },
   form: {
     gap: theme.spacing.md,
   },
   switchRow: {
     alignItems: 'center',
     flexDirection: 'row',
+    flexWrap: 'wrap',
     gap: theme.spacing.xs,
     justifyContent: 'center',
   },

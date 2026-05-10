@@ -40,8 +40,8 @@ export function AppButton({
 const styles = StyleSheet.create({
   button: {
     alignItems: 'center',
-    borderRadius: theme.radius.md,
-    height: 54,
+    borderRadius: theme.radius.sm,
+    height: 52,
     justifyContent: 'center',
     paddingHorizontal: theme.spacing.lg,
   },

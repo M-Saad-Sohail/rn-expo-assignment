@@ -74,23 +74,20 @@ export default function SignupScreen() {
           contentContainerStyle={styles.content}
           keyboardShouldPersistTaps="handled"
           showsVerticalScrollIndicator={false}>
-          <View style={styles.headerRow}>
+          <View style={styles.topRow}>
             <TouchableOpacity activeOpacity={0.78} onPress={() => router.replace('/')} style={styles.backButton}>
-              <Ionicons color={theme.colors.text} name="arrow-back" size={20} />
+              <Ionicons color={theme.colors.primary} name="chevron-back" size={21} />
             </TouchableOpacity>
-            <View>
-              <Text style={styles.headerSmall}>New workspace</Text>
-              <Text style={styles.headerTitle}>Signup</Text>
-            </View>
+            <Text style={styles.topTitle}>Create profile</Text>
           </View>
 
-          <View style={styles.previewCard}>
-            <View style={styles.previewBadge}>
-              <Ionicons color={theme.colors.ink} name="color-palette" size={24} />
+          <View style={styles.infoCard}>
+            <View style={styles.infoIcon}>
+              <Ionicons color={theme.colors.ink} name="id-card" size={25} />
             </View>
-            <Text style={styles.previewTitle}>Create your build profile</Text>
-            <Text style={styles.previewText}>
-              Add your details once, then return to login with everything prefilled.
+            <Text style={styles.infoTitle}>Set up your dev pass</Text>
+            <Text style={styles.infoText}>
+              Add your name and login details. The login screen will be filled automatically after signup.
             </Text>
           </View>
 
@@ -104,7 +101,7 @@ export default function SignupScreen() {
                   setFullName(value);
                   setErrors((current) => ({ ...current, fullName: undefined }));
                 }}
-                placeholder="Aleena Fatima"
+                placeholder="Shakaib Lodhi"
                 value={fullName}
               />
               <AppInput
@@ -115,7 +112,7 @@ export default function SignupScreen() {
                   setEmail(value);
                   setErrors((current) => ({ ...current, email: undefined }));
                 }}
-                placeholder="aleena@example.com"
+                placeholder="shakaib@example.com"
                 value={email}
               />
               <AppInput
@@ -138,7 +135,7 @@ export default function SignupScreen() {
             />
 
             <TouchableOpacity activeOpacity={0.75} onPress={() => router.replace('/')} style={styles.loginLink}>
-              <Text style={styles.loginText}>Back to login</Text>
+              <Text style={styles.loginText}>Back to Login</Text>
             </TouchableOpacity>
           </View>
         </ScrollView>
@@ -161,7 +158,7 @@ const styles = StyleSheet.create({
     padding: theme.spacing.lg,
     paddingBottom: theme.spacing.xxl,
   },
-  headerRow: {
+  topRow: {
     alignItems: 'center',
     flexDirection: 'row',
     gap: theme.spacing.md,
@@ -171,49 +168,43 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: theme.colors.chip,
     borderColor: theme.colors.border,
-    borderRadius: theme.radius.pill,
+    borderRadius: theme.radius.sm,
     borderWidth: 1,
-    height: 46,
+    height: 44,
     justifyContent: 'center',
-    width: 46,
+    width: 44,
   },
-  headerSmall: {
-    color: theme.colors.accent,
-    fontSize: theme.fontSize.xs,
-    fontWeight: '900',
-    textTransform: 'uppercase',
-  },
-  headerTitle: {
+  topTitle: {
     color: theme.colors.text,
-    fontSize: theme.fontSize.xl,
+    fontSize: theme.fontSize.lg,
     fontWeight: '900',
     letterSpacing: 0,
   },
-  previewCard: {
-    backgroundColor: theme.colors.primarySoft,
-    borderColor: theme.colors.border,
+  infoCard: {
+    backgroundColor: theme.colors.accentSoft,
+    borderColor: theme.colors.accentDark,
     borderRadius: theme.radius.xl,
     borderWidth: 1,
     padding: theme.spacing.lg,
     ...theme.shadows.card,
   },
-  previewBadge: {
+  infoIcon: {
     alignItems: 'center',
-    backgroundColor: theme.colors.gold,
-    borderRadius: theme.radius.lg,
-    height: 56,
+    backgroundColor: theme.colors.primary,
+    borderRadius: theme.radius.sm,
+    height: 52,
     justifyContent: 'center',
     marginBottom: theme.spacing.lg,
-    width: 56,
+    width: 52,
   },
-  previewTitle: {
+  infoTitle: {
     color: theme.colors.text,
     fontSize: theme.fontSize.xl,
     fontWeight: '900',
     letterSpacing: 0,
     lineHeight: 34,
   },
-  previewText: {
+  infoText: {
     color: theme.colors.mutedText,
     fontSize: theme.fontSize.md,
     lineHeight: 24,
@@ -222,7 +213,7 @@ const styles = StyleSheet.create({
   formCard: {
     backgroundColor: theme.colors.card,
     borderColor: theme.colors.border,
-    borderRadius: theme.radius.xl,
+    borderRadius: theme.radius.lg,
     borderWidth: 1,
     gap: theme.spacing.lg,
     padding: theme.spacing.lg,
