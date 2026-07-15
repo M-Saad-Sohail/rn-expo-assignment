@@ -1,271 +1,89 @@
-import { Ionicons } from '@expo/vector-icons';
-import { router, useLocalSearchParams } from 'expo-router';
-import { useEffect, useState } from 'react';
-import {
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { router } from 'expo-router';
+import { useEffect } from 'react';
+import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { AppButton } from '@/components/AppButton';
-import { AppInput } from '@/components/AppInput';
+import { DecorativeBlob } from '@/components/DecorativeBlob';
+import { PurposeMintLogo } from '@/components/PurposeMintLogo';
 import { theme } from '@/constants/theme';
 
-type LoginErrors = {
-  email?: string;
-  password?: string;
-};
-
-export default function LoginScreen() {
-  const params = useLocalSearchParams<{
-    email?: string;
-    password?: string;
-    name?: string;
-  }>();
-
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [fullName, setFullName] = useState('Shakaib Lodhi');
-  const [errors, setErrors] = useState<LoginErrors>({});
-  const [loading, setLoading] = useState(false);
-
+export default function SplashScreen() {
   useEffect(() => {
-    if (params.email) {
-      setEmail(params.email);
-    }
+    const timer = setTimeout(() => {
+      router.replace('/(auth)/login');
+    }, 1400);
 
-    if (params.password) {
-      setPassword(params.password);
-    }
-
-    if (params.name) {
-      setFullName(params.name);
-    }
-  }, [params.email, params.name, params.password]);
-
-  const handleLogin = () => {
-    const nextErrors: LoginErrors = {};
-
-    if (!email.trim()) {
-      nextErrors.email = 'Email is required.';
-    }
-
-    if (!password.trim()) {
-      nextErrors.password = 'Password is required.';
-    }
-
-    setErrors(nextErrors);
-
-    if (Object.keys(nextErrors).length > 0) {
-      return;
-    }
-
-    setLoading(true);
-
-    setTimeout(() => {
-      setLoading(false);
-      router.replace({
-        pathname: '/home',
-        params: { name: fullName.trim() || 'Shakaib Lodhi' },
-      });
-    }, 1500);
-  };
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-        style={styles.keyboardView}>
-        <ScrollView
-          contentContainerStyle={styles.content}
-          keyboardShouldPersistTaps="handled"
-          showsVerticalScrollIndicator={false}>
-          <View style={styles.topPanel}>
-            <View style={styles.logoRow}>
-              <View style={styles.logoBox}>
-                <Ionicons color={theme.colors.ink} name="construct" size={27} />
-              </View>
-              <View>
-                <Text style={styles.brandSmall}>Build Room</Text>
-                <Text style={styles.brandTitle}>DevForge</Text>
-              </View>
-            </View>
-
-            <Text style={styles.heroTitle}>Make the next screen count.</Text>
-            <Text style={styles.heroText}>
-              Login to continue your coding flow with simple state and clean navigation.
-            </Text>
-          </View>
-
-          <View style={styles.formCard}>
-            <View style={styles.formTitleRow}>
-              <Text style={styles.formTitle}>Login</Text>
-              <View style={styles.statusPill}>
-                <Text style={styles.statusText}>Ready</Text>
-              </View>
-            </View>
-
-            <View style={styles.form}>
-              <AppInput
-                error={errors.email}
-                keyboardType="email-address"
-                label="Email"
-                onChangeText={(value) => {
-                  setEmail(value);
-                  setErrors((current) => ({ ...current, email: undefined }));
-                }}
-                placeholder="shakaib@example.com"
-                value={email}
-              />
-              <AppInput
-                error={errors.password}
-                label="Password"
-                onChangeText={(value) => {
-                  setPassword(value);
-                  setErrors((current) => ({ ...current, password: undefined }));
-                }}
-                placeholder="Enter password"
-                secureTextEntry
-                value={password}
-              />
-            </View>
-
-            <AppButton
-              disabled={loading}
-              onPress={handleLogin}
-              title={loading ? 'Logging in...' : 'Login'}
-            />
-
-            <View style={styles.switchRow}>
-              <Text style={styles.switchText}>First time here?</Text>
-              <TouchableOpacity activeOpacity={0.75} onPress={() => router.push('/signup')}>
-                <Text style={styles.switchLink}>Create account</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </ScrollView>
-      </KeyboardAvoidingView>
+      <DecorativeBlob style={styles.topBlob} />
+      <DecorativeBlob style={styles.bottomBlob} />
+      <View style={styles.content}>
+        <View style={styles.logoHalo}>
+          <PurposeMintLogo showName={false} size={128} />
+        </View>
+        <Text style={styles.brand}>PurposeMint</Text>
+        <Text style={styles.tagline}>Small steps. Meaningful progress.</Text>
+        <ActivityIndicator color={theme.colors.deepGreen} size="small" style={styles.loader} />
+      </View>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   safeArea: {
-    backgroundColor: theme.colors.background,
+    backgroundColor: theme.colors.cream,
     flex: 1,
-  },
-  keyboardView: {
-    flex: 1,
+    overflow: 'hidden',
   },
   content: {
-    flexGrow: 1,
-    gap: theme.spacing.lg,
+    alignItems: 'center',
+    flex: 1,
     justifyContent: 'center',
-    padding: theme.spacing.lg,
-    paddingBottom: theme.spacing.xxl,
+    padding: theme.spacing.xl,
   },
-  topPanel: {
-    backgroundColor: theme.colors.cardAlt,
+  logoHalo: {
+    alignItems: 'center',
+    backgroundColor: theme.colors.white,
     borderColor: theme.colors.border,
-    borderRadius: theme.radius.xl,
+    borderRadius: 88,
     borderWidth: 1,
-    padding: theme.spacing.lg,
+    height: 176,
+    justifyContent: 'center',
+    width: 176,
     ...theme.shadows.card,
   },
-  logoRow: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    gap: theme.spacing.md,
-    marginBottom: theme.spacing.xl,
-  },
-  logoBox: {
-    alignItems: 'center',
-    backgroundColor: theme.colors.primary,
-    borderRadius: theme.radius.sm,
-    height: 54,
-    justifyContent: 'center',
-    width: 54,
-  },
-  brandSmall: {
-    color: theme.colors.accent,
-    fontSize: theme.fontSize.xs,
+  brand: {
+    color: theme.colors.darkGreenText,
+    fontSize: 34,
     fontWeight: '900',
-    textTransform: 'uppercase',
+    letterSpacing: -1,
+    marginTop: theme.spacing.lg,
   },
-  brandTitle: {
-    color: theme.colors.text,
-    fontSize: theme.fontSize.lg,
-    fontWeight: '900',
-    letterSpacing: 0,
-  },
-  heroTitle: {
-    color: theme.colors.text,
-    fontSize: theme.fontSize.xxl,
-    fontWeight: '900',
-    letterSpacing: 0,
-    lineHeight: 44,
-  },
-  heroText: {
+  tagline: {
     color: theme.colors.mutedText,
     fontSize: theme.fontSize.md,
-    lineHeight: 24,
-    marginTop: theme.spacing.md,
+    lineHeight: 23,
+    marginTop: theme.spacing.xs,
+    textAlign: 'center',
   },
-  formCard: {
-    backgroundColor: theme.colors.card,
-    borderColor: theme.colors.border,
-    borderRadius: theme.radius.lg,
-    borderWidth: 1,
-    gap: theme.spacing.lg,
-    padding: theme.spacing.lg,
+  loader: {
+    marginTop: theme.spacing.xl,
   },
-  formTitleRow: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+  topBlob: {
+    backgroundColor: theme.colors.lightMint,
+    height: 220,
+    right: -96,
+    top: -72,
+    width: 220,
   },
-  formTitle: {
-    color: theme.colors.text,
-    fontSize: theme.fontSize.xl,
-    fontWeight: '900',
-    letterSpacing: 0,
-  },
-  statusPill: {
-    backgroundColor: theme.colors.accentSoft,
-    borderColor: theme.colors.accentDark,
-    borderRadius: theme.radius.pill,
-    borderWidth: 1,
-    paddingHorizontal: theme.spacing.md,
-    paddingVertical: theme.spacing.xs,
-  },
-  statusText: {
-    color: theme.colors.accent,
-    fontSize: theme.fontSize.xs,
-    fontWeight: '900',
-  },
-  form: {
-    gap: theme.spacing.md,
-  },
-  switchRow: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: theme.spacing.xs,
-    justifyContent: 'center',
-  },
-  switchText: {
-    color: theme.colors.mutedText,
-    fontSize: theme.fontSize.sm,
-    fontWeight: '700',
-  },
-  switchLink: {
-    color: theme.colors.primary,
-    fontSize: theme.fontSize.sm,
-    fontWeight: '900',
+  bottomBlob: {
+    backgroundColor: theme.colors.lightCoral,
+    bottom: -110,
+    height: 260,
+    left: -110,
+    width: 260,
   },
 });

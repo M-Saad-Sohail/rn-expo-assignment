@@ -9,12 +9,12 @@ export const unstable_settings = {
 export default function RootLayout() {
   return (
     <>
-      <Stack screenOptions={{ headerShown: false }}>
+      <Stack screenOptions={{ animation: 'fade', headerShown: false }}>
         <Stack.Screen name="index" />
-        <Stack.Screen name="signup" />
-        <Stack.Screen name="home" />
+        <Stack.Screen name="(auth)" />
+        <Stack.Screen name="(tabs)" />
       </Stack>
-      <StatusBar style="light" />
+      <StatusBar backgroundColor="transparent" style="dark" translucent />
     </>
   );
 }

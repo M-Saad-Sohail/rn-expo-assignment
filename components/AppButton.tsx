@@ -1,4 +1,4 @@
-import { StyleProp, StyleSheet, Text, TextStyle, TouchableOpacity, ViewStyle } from 'react-native';
+import { ActivityIndicator, StyleProp, StyleSheet, Text, TextStyle, TouchableOpacity, ViewStyle } from 'react-native';
 
 import { theme } from '@/constants/theme';
 
@@ -6,33 +6,55 @@ type AppButtonProps = {
   title: string;
   onPress: () => void;
   disabled?: boolean;
-  variant?: 'primary' | 'soft';
+  loading?: boolean;
+  loadingTitle?: string;
+  variant?: 'primary' | 'soft' | 'outline';
   style?: StyleProp<ViewStyle>;
   textStyle?: StyleProp<TextStyle>;
+  accessibilityLabel?: string;
 };
 
 export function AppButton({
   title,
   onPress,
   disabled = false,
+  loading = false,
+  loadingTitle,
   variant = 'primary',
   style,
   textStyle,
+  accessibilityLabel,
 }: AppButtonProps) {
-  const isSoft = variant === 'soft';
+  const isDisabled = disabled || loading;
+  const isPrimary = variant === 'primary';
 
   return (
     <TouchableOpacity
-      activeOpacity={0.84}
-      disabled={disabled}
+      accessibilityLabel={accessibilityLabel ?? title}
+      accessibilityRole="button"
+      accessibilityState={{ busy: loading, disabled: isDisabled }}
+      activeOpacity={0.82}
+      disabled={isDisabled}
       onPress={onPress}
       style={[
         styles.button,
-        isSoft ? styles.softButton : styles.primaryButton,
-        disabled && styles.disabledButton,
+        isPrimary && styles.primaryButton,
+        variant === 'soft' && styles.softButton,
+        variant === 'outline' && styles.outlineButton,
+        isDisabled && styles.disabledButton,
         style,
       ]}>
-      <Text style={[styles.title, isSoft && styles.softTitle, textStyle]}>{title}</Text>
+      {loading ? (
+        <ActivityIndicator color={isPrimary ? theme.colors.white : theme.colors.deepGreen} size="small" />
+      ) : null}
+      <Text
+        style={[
+          styles.title,
+          isPrimary ? styles.primaryTitle : styles.secondaryTitle,
+          textStyle,
+        ]}>
+        {loading ? loadingTitle ?? title : title}
+      </Text>
     </TouchableOpacity>
   );
 }
@@ -40,30 +62,37 @@ export function AppButton({
 const styles = StyleSheet.create({
   button: {
     alignItems: 'center',
-    borderRadius: theme.radius.sm,
-    height: 52,
+    borderRadius: theme.radius.md,
+    flexDirection: 'row',
+    gap: theme.spacing.xs,
+    height: 56,
     justifyContent: 'center',
     paddingHorizontal: theme.spacing.lg,
   },
   primaryButton: {
-    backgroundColor: theme.colors.primary,
+    backgroundColor: theme.colors.deepGreen,
     ...theme.shadows.button,
   },
   softButton: {
-    backgroundColor: theme.colors.chip,
+    backgroundColor: theme.colors.lightMint,
+  },
+  outlineButton: {
+    backgroundColor: theme.colors.white,
     borderColor: theme.colors.border,
     borderWidth: 1,
   },
   disabledButton: {
-    opacity: 0.6,
+    opacity: 0.62,
   },
   title: {
-    color: theme.colors.ink,
     fontSize: theme.fontSize.md,
-    fontWeight: '900',
+    fontWeight: '800',
   },
-  softTitle: {
-    color: theme.colors.text,
+  primaryTitle: {
+    color: theme.colors.white,
+  },
+  secondaryTitle: {
+    color: theme.colors.deepGreen,
   },
 });
 

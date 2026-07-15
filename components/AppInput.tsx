@@ -1,16 +1,21 @@
-import { KeyboardTypeOptions, StyleSheet, Text, TextInput, TextInputProps, View } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import { useState } from 'react';
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  TextInputProps,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 
 import { theme } from '@/constants/theme';
 
-type AppInputProps = {
+type AppInputProps = Omit<TextInputProps, 'onChangeText' | 'style' | 'value'> & {
   label: string;
   value: string;
   onChangeText: (text: string) => void;
-  placeholder?: string;
-  secureTextEntry?: boolean;
-  keyboardType?: KeyboardTypeOptions;
   error?: string;
-  autoCapitalize?: TextInputProps['autoCapitalize'];
 };
 
 export function AppInput({
@@ -19,24 +24,48 @@ export function AppInput({
   onChangeText,
   placeholder,
   secureTextEntry = false,
-  keyboardType = 'default',
   error,
+  editable = true,
   autoCapitalize = 'none',
+  ...inputProps
 }: AppInputProps) {
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const isPasswordField = Boolean(secureTextEntry);
+
   return (
     <View style={styles.container}>
       <Text style={styles.label}>{label}</Text>
-      <TextInput
-        autoCapitalize={autoCapitalize}
-        keyboardType={keyboardType}
-        onChangeText={onChangeText}
-        placeholder={placeholder}
-        placeholderTextColor={theme.colors.mutedText}
-        secureTextEntry={secureTextEntry}
-        selectionColor={theme.colors.primary}
-        style={[styles.input, error && styles.inputError]}
-        value={value}
-      />
+      <View style={[styles.inputFrame, error && styles.inputError, !editable && styles.inputDisabled]}>
+        <TextInput
+          accessibilityLabel={label}
+          autoCapitalize={autoCapitalize}
+          editable={editable}
+          onChangeText={onChangeText}
+          placeholder={placeholder}
+          placeholderTextColor={theme.colors.disabled}
+          secureTextEntry={isPasswordField && !isPasswordVisible}
+          selectionColor={theme.colors.deepGreen}
+          style={styles.input}
+          value={value}
+          {...inputProps}
+        />
+        {isPasswordField ? (
+          <TouchableOpacity
+            accessibilityLabel={isPasswordVisible ? 'Hide password' : 'Show password'}
+            accessibilityRole="button"
+            activeOpacity={0.7}
+            disabled={!editable}
+            hitSlop={8}
+            onPress={() => setIsPasswordVisible((current) => !current)}
+            style={styles.visibilityButton}>
+            <Ionicons
+              color={theme.colors.mutedText}
+              name={isPasswordVisible ? 'eye-off-outline' : 'eye-outline'}
+              size={21}
+            />
+          </TouchableOpacity>
+        ) : null}
+      </View>
       {error ? <Text style={styles.error}>{error}</Text> : null}
     </View>
   );
@@ -44,30 +73,48 @@ export function AppInput({
 
 const styles = StyleSheet.create({
   container: {
-    gap: theme.spacing.xs,
+    gap: theme.spacing.xxs,
   },
   label: {
     color: theme.colors.text,
     fontSize: theme.fontSize.sm,
-    fontWeight: '800',
+    fontWeight: '700',
   },
-  input: {
+  inputFrame: {
+    alignItems: 'center',
     backgroundColor: theme.colors.inputBackground,
     borderColor: theme.colors.border,
-    borderRadius: theme.radius.sm,
+    borderRadius: theme.radius.md,
     borderWidth: 1,
+    flexDirection: 'row',
+    minHeight: 56,
+  },
+  input: {
     color: theme.colors.text,
+    flex: 1,
     fontSize: theme.fontSize.md,
-    height: 54,
+    minHeight: 54,
     paddingHorizontal: theme.spacing.md,
+    paddingVertical: theme.spacing.sm,
+  },
+  visibilityButton: {
+    alignItems: 'center',
+    height: 48,
+    justifyContent: 'center',
+    marginRight: theme.spacing.xs,
+    width: 44,
   },
   inputError: {
     borderColor: theme.colors.danger,
   },
+  inputDisabled: {
+    opacity: 0.65,
+  },
   error: {
     color: theme.colors.danger,
     fontSize: theme.fontSize.xs,
-    fontWeight: '700',
+    fontWeight: '600',
+    lineHeight: 17,
   },
 });
 
