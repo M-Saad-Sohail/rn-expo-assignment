@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     ...theme.shadows.card,
   },
   mintBlob: {
-    backgroundColor: 'rgba(158, 223, 203, 0.65)',
+    backgroundColor: 'rgba(194, 10, 114, 0.12)',
     height: 190,
     right: -50,
     top: 54,
@@ -108,14 +108,14 @@ const styles = StyleSheet.create({
     width: 120,
   },
   coralBlob: {
-    backgroundColor: 'rgba(255, 135, 124, 0.28)',
+    backgroundColor: 'rgba(243, 207, 24, 0.30)',
     height: 86,
     right: 42,
     top: -34,
     width: 86,
   },
   lavenderBlob: {
-    backgroundColor: 'rgba(237, 231, 250, 0.9)',
+    backgroundColor: 'rgba(87, 16, 111, 0.10)',
     bottom: -42,
     height: 120,
     left: -34,

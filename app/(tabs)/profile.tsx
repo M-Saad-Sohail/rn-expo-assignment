@@ -23,7 +23,7 @@ export default function ProfileScreen() {
 
       <View style={styles.profileCard}>
         <View style={styles.logoWrap}>
-          <PurposeMintLogo showName={false} size={76} />
+          <PurposeMintLogo size={44} />
         </View>
         <Text style={styles.name}>Maya Anderson</Text>
         <View style={styles.planPill}>
@@ -78,10 +78,10 @@ const styles = StyleSheet.create({
   logoWrap: {
     alignItems: 'center',
     backgroundColor: theme.colors.white,
-    borderRadius: theme.radius.pill,
-    height: 104,
+    borderRadius: theme.radius.lg,
+    height: 84,
     justifyContent: 'center',
-    width: 104,
+    width: 210,
     ...theme.shadows.card,
   },
   name: {

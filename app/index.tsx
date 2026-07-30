@@ -22,9 +22,8 @@ export default function SplashScreen() {
       <DecorativeBlob style={styles.bottomBlob} />
       <View style={styles.content}>
         <View style={styles.logoHalo}>
-          <PurposeMintLogo showName={false} size={128} />
+          <PurposeMintLogo size={70} />
         </View>
-        <Text style={styles.brand}>PurposeMint</Text>
         <Text style={styles.tagline}>Small steps. Meaningful progress.</Text>
         <ActivityIndicator color={theme.colors.deepGreen} size="small" style={styles.loader} />
       </View>
@@ -48,25 +47,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: theme.colors.white,
     borderColor: theme.colors.border,
-    borderRadius: 88,
+    borderRadius: theme.radius.xl,
     borderWidth: 1,
-    height: 176,
+    height: 142,
     justifyContent: 'center',
-    width: 176,
+    width: '100%',
+    maxWidth: 360,
     ...theme.shadows.card,
-  },
-  brand: {
-    color: theme.colors.darkGreenText,
-    fontSize: 34,
-    fontWeight: '900',
-    letterSpacing: -1,
-    marginTop: theme.spacing.lg,
   },
   tagline: {
     color: theme.colors.mutedText,
     fontSize: theme.fontSize.md,
     lineHeight: 23,
-    marginTop: theme.spacing.xs,
+    marginTop: theme.spacing.lg,
     textAlign: 'center',
   },
   loader: {
@@ -80,7 +73,7 @@ const styles = StyleSheet.create({
     width: 220,
   },
   bottomBlob: {
-    backgroundColor: theme.colors.lightCoral,
+    backgroundColor: theme.colors.lavender,
     bottom: -110,
     height: 260,
     left: -110,

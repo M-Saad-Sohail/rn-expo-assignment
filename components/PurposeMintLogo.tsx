@@ -1,7 +1,5 @@
 import { Image } from "expo-image";
-import { StyleSheet, Text, View } from "react-native";
-
-import { theme } from "@/constants/theme";
+import { StyleSheet, View } from "react-native";
 
 type PurposeMintLogoProps = {
   size?: number;
@@ -11,9 +9,11 @@ type PurposeMintLogoProps = {
 
 export function PurposeMintLogo({
   size = 52,
-  showName = true,
+  showName: _showName = true,
   inverted = false,
 }: PurposeMintLogoProps) {
+  const logoWidth = size * 3.72;
+
   return (
     <View
       accessibilityLabel="PurposeMint"
@@ -22,14 +22,12 @@ export function PurposeMintLogo({
     >
       <Image
         contentFit="contain"
-        source={require("../assets/images/purpose-mint-logo.png")}
-        style={[styles.image, { height: size, width: size }]}
+        source={require("../assets/images/purposemint-logo.png")}
+        style={[
+          styles.image,
+          { height: size, opacity: inverted ? 0.96 : 1, width: logoWidth },
+        ]}
       />
-      {showName ? (
-        <Text style={[styles.name, inverted && styles.nameInverted]}>
-          PurposeMint
-        </Text>
-      ) : null}
     </View>
   );
 }
@@ -38,18 +36,8 @@ const styles = StyleSheet.create({
   lockup: {
     alignItems: "center",
     flexDirection: "row",
-    gap: theme.spacing.sm,
   },
   image: {
-    borderRadius: theme.radius.sm,
-  },
-  name: {
-    color: theme.colors.darkGreenText,
-    fontSize: 23,
-    fontWeight: "900",
-    letterSpacing: -0.6,
-  },
-  nameInverted: {
-    color: theme.colors.white,
+    maxWidth: "100%",
   },
 });
